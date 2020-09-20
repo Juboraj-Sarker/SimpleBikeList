@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Spinner Assignment</string>
+
+    <string-array name="brand_list">
+        <item>Select Brand Name</item>
+        <item>Bajaj</item>
+        <item>Honda</item>
+        <item>Suzuki</item>
+        <item>Yamaha</item>
+    </string-array>
+</resources>
