@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,11 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner spBrand;
     Button btnSearchBike;
-    RecyclerView rvBikeList;
     TextView tvMessage;
-    List<Bike> bikeList = new ArrayList<>();
-    BikeHelper bikeHelper = new BikeHelper(this);
-    CustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         spBrand = (Spinner) findViewById(R.id.sp_brand);
         btnSearchBike = (Button) findViewById(R.id.btn_searchBike);
-        rvBikeList = (RecyclerView) findViewById(R.id.rv_bike_list);
+
         tvMessage = (TextView) findViewById(R.id.tv_message);
 
         btnSearchBike.setOnClickListener(new View.OnClickListener() {
@@ -51,19 +48,11 @@ public class MainActivity extends AppCompatActivity {
                 if (spBrand.getSelectedItemPosition() == 0){
                     Toast.makeText(MainActivity.this, "Please select a valid bike brand", Toast.LENGTH_SHORT).show();
                 }else {
-                    bikeList.clear();
-                    tvMessage.setVisibility(View.GONE);
+
                     String brand = spBrand.getSelectedItem().toString();
-                    bikeList = bikeHelper.getBikeListWithBrand(brand);
-
-                    adapter = new CustomAdapter(MainActivity.this, bikeList, rvBikeList);
-                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 1);
-                    rvBikeList.setLayoutManager(layoutManager);
-                    rvBikeList.addItemDecoration(new GridSpacingItemDecoration(1, 0, true));
-                    rvBikeList.setItemAnimator(new DefaultItemAnimator());
-
-                    rvBikeList.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                    intent.putExtra("brand", brand);
+                    startActivity(intent);
 
                 }
             }
